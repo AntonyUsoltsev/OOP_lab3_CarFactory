@@ -4,7 +4,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import ru.nsu.ccfit.usoltsev.carfactory.dealers.Dealer;
 import ru.nsu.ccfit.usoltsev.carfactory.producers.EngineProducer;
+import ru.nsu.ccfit.usoltsev.carfactory.storages.AutoStorage;
 import ru.nsu.ccfit.usoltsev.carfactory.storages.EngineStorage;
 
 import java.io.IOException;
@@ -22,11 +24,15 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
 //        launch();
         EngineStorage engineStorage = new EngineStorage();
+        AutoStorage autoStorage = new AutoStorage();
         EngineProducer engineProducer = new EngineProducer(engineStorage);
-        Factory factory = new Factory(engineStorage);
+        Factory factory = new Factory(engineStorage,autoStorage);
+        Dealer dealer = new Dealer(autoStorage);
         engineProducer.start();
         factory.start();
+        dealer.start();
         engineProducer.join();
         factory.join();
+        dealer.join();
     }
 }
