@@ -1,21 +1,27 @@
 package ru.nsu.ccfit.usoltsev.carfactory.details;
 
-import java.util.UUID;
+import java.util.*;
 
 public class Auto {
-    Engine engine;
 
+    HashMap<String, Detail> details = new HashMap<>();
     UUID autoID;
 
-    public Auto(Engine engine) {
+    String autoInfo;
+
+    public Auto(LinkedList<Detail> detail) {
         this.autoID = UUID.randomUUID();
-        this.engine = engine;
+        for (Detail det : detail) {
+            this.details.put(det.getClass().getSimpleName(), det);
+        }
+
     }
 
     public String getAutoID() {
         return String.valueOf(UUID.randomUUID());
     }
-    public Engine getEngine(){
-        return engine;
+
+    public Engine getEngine() {
+        return (Engine) details.get("Engine");
     }
 }
