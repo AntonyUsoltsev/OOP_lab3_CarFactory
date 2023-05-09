@@ -5,8 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import ru.nsu.ccfit.usoltsev.carfactory.dealers.Dealer;
+import ru.nsu.ccfit.usoltsev.carfactory.producers.AccessoryProducer;
 import ru.nsu.ccfit.usoltsev.carfactory.producers.BodyProducer;
 import ru.nsu.ccfit.usoltsev.carfactory.producers.EngineProducer;
+import ru.nsu.ccfit.usoltsev.carfactory.storages.AccessoryStorage;
 import ru.nsu.ccfit.usoltsev.carfactory.storages.AutoStorage;
 import ru.nsu.ccfit.usoltsev.carfactory.storages.BodyStorage;
 import ru.nsu.ccfit.usoltsev.carfactory.storages.EngineStorage;
@@ -25,24 +27,35 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
 //        launch();
-        EngineStorage engineStorage = new EngineStorage(5);
-        BodyStorage bodyStorage = new BodyStorage(6);
+        try {
+            FactoryProperties.readInfo();
+            EngineStorage engineStorage = new EngineStorage(FactoryProperties.ENGINE_STORAGE_SIZE);
+            BodyStorage bodyStorage = new BodyStorage(FactoryProperties.BODY_STORAGE_SIZE);
+            AccessoryStorage accessoryStorage = new AccessoryStorage(FactoryProperties.ACCESSORY_STORAGE_SIZE);
 
-        AutoStorage autoStorage = new AutoStorage();
+            AutoStorage autoStorage = new AutoStorage();
 
-        EngineProducer engineProducer = new EngineProducer(engineStorage);
-        BodyProducer bodyProducer = new BodyProducer(bodyStorage);
-        Factory factory = new Factory(engineStorage,bodyStorage,autoStorage);
+            EngineProducer engineProducer = new EngineProducer(engineStorage);
+            BodyProducer bodyProducer = new BodyProducer(bodyStorage);
+            AccessoryProducer accessoryProducer = new AccessoryProducer(accessoryStorage);
 
-        Dealer dealer = new Dealer(autoStorage);
+            Factory factory = new Factory(engineStorage, bodyStorage, accessoryStorage, autoStorage);
 
-        engineProducer.start();
-        bodyProducer.start();
-        factory.start();
-        dealer.start();
-        engineProducer.join();
-        bodyProducer.join();
-        factory.join();
-        dealer.join();
+            Dealer dealer = new Dealer(autoStorage);
+
+            engineProducer.start();
+            bodyProducer.start();
+            accessoryProducer.start();
+            factory.start();
+            dealer.start();
+
+            engineProducer.join();
+            bodyProducer.join();
+            accessoryProducer.join();
+            factory.join();
+            dealer.join();
+        } catch (RuntimeException e){
+            System.err.println(e.getMessage());
+        }
     }
 }

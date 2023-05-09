@@ -10,6 +10,9 @@ public class EngineProducer extends Thread {
         this.engineStorage = storage;
     }
 
+//    public EngineProducer(EngineStorage storage, int sleepTime) {
+//        super(storage, sleepTime);
+//    }
     @Override
     public void run() {
         try {

@@ -17,7 +17,7 @@ public class Dealer extends Thread {
             while (!Thread.currentThread().isInterrupted()) {
                 Auto newAuto = autoStorage.get();
                 Thread.sleep(10000);
-                System.out.println("Buy new car: " + newAuto.getAutoID() + " engine id:" + newAuto.getEngine().getID());
+                System.out.println("Buy new car: " + newAuto.getAutoInfo());
             }
         } catch (InterruptedException e) {
             System.err.println(e.getMessage());
