@@ -1,33 +1,26 @@
 package ru.nsu.ccfit.usoltsev.carfactory.details;
 
+import ru.nsu.ccfit.usoltsev.carfactory.details.Detail;
+
 import java.util.*;
-
-public class Auto {
-
-    HashMap<String, Detail> details = new HashMap<>();
-    UUID autoID;
-
-    String autoInfo ;
-
+@SuppressWarnings("FieldCanBeLocal")
+public class Auto extends Detail {
+    private final HashMap<String, Detail> details;
+    private final String autoInfo;
     public Auto(LinkedList<Detail> detail) {
-        autoInfo = "";
-        this.autoID = UUID.randomUUID();
-        autoInfo += ("Auto: " + autoID );
+        super();
+        details = new HashMap<>();
+        StringBuilder stringBuilder = new StringBuilder("Auto: " + this.getID());
         for (Detail det : detail) {
             this.details.put(det.getClass().getSimpleName(), det);
-            autoInfo += (", " + det.getClass().getSimpleName()+ " " + det.getID());
+            stringBuilder.append(", ").append(det.getClass().getSimpleName()).append(" ").append(det.getID());
         }
 
-    }
+        autoInfo = String.valueOf(stringBuilder);
 
-    public String getAutoID() {
-        return String.valueOf(UUID.randomUUID());
     }
     public String getAutoInfo() {
         return autoInfo;
     }
 
-    public Engine getEngine() {
-        return (Engine) details.get("Engine");
-    }
 }

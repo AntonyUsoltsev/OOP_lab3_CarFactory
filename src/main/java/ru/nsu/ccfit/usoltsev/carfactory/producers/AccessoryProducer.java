@@ -3,6 +3,8 @@ package ru.nsu.ccfit.usoltsev.carfactory.producers;
 import ru.nsu.ccfit.usoltsev.carfactory.details.Accessories;
 import ru.nsu.ccfit.usoltsev.carfactory.storages.AccessoryStorage;
 
+import java.util.concurrent.TimeUnit;
+
 public class AccessoryProducer extends Thread {
     AccessoryStorage accessoryStorage;
 
@@ -15,7 +17,7 @@ public class AccessoryProducer extends Thread {
         try {
             while (!Thread.currentThread().isInterrupted()) {
                 accessoryStorage.put(new Accessories());
-                Thread.sleep(1500);
+                TimeUnit.MILLISECONDS.sleep(1500);
             }
         } catch (InterruptedException e) {
             System.err.println(e.getMessage());

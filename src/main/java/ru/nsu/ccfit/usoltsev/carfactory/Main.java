@@ -33,28 +33,29 @@ public class Main {
             BodyStorage bodyStorage = new BodyStorage(FactoryProperties.BODY_STORAGE_SIZE);
             AccessoryStorage accessoryStorage = new AccessoryStorage(FactoryProperties.ACCESSORY_STORAGE_SIZE);
 
-            AutoStorage autoStorage = new AutoStorage();
+            AutoStorage autoStorage = new AutoStorage(FactoryProperties.AUTO_STORAGE_SIZE);
 
             EngineProducer engineProducer = new EngineProducer(engineStorage);
             BodyProducer bodyProducer = new BodyProducer(bodyStorage);
             AccessoryProducer accessoryProducer = new AccessoryProducer(accessoryStorage);
 
             Factory factory = new Factory(engineStorage, bodyStorage, accessoryStorage, autoStorage);
-
+            AutoStorageController autoStorageController = new AutoStorageController(factory, autoStorage);
             Dealer dealer = new Dealer(autoStorage);
 
             engineProducer.start();
             bodyProducer.start();
             accessoryProducer.start();
-            factory.start();
+            autoStorageController.start();
             dealer.start();
 
             engineProducer.join();
             bodyProducer.join();
             accessoryProducer.join();
-            factory.join();
+            autoStorageController.join();
             dealer.join();
-        } catch (RuntimeException e){
+
+        } catch (RuntimeException e) {
             System.err.println(e.getMessage());
         }
     }
