@@ -1,5 +1,7 @@
 package ru.nsu.ccfit.usoltsev.carfactory.storages;
 
+import javafx.application.Platform;
+import ru.nsu.ccfit.usoltsev.carfactory.FillListener;
 import ru.nsu.ccfit.usoltsev.carfactory.details.Detail;
 
 import java.util.LinkedList;
@@ -10,11 +12,14 @@ public class Storage<D extends Detail> {
     private final LinkedList<D> itemList;
     private final int storageCapacity;
     private final AtomicInteger storageFill;
+    private final FillListener listener;
 
-    public Storage(int storageCapacity) {
+    public Storage(int storageCapacity, FillListener listener) {
         this.storageCapacity = storageCapacity;
+        this.listener = listener;
         itemList = new LinkedList<>();
         storageFill = new AtomicInteger(0);
+
     }
 
     public synchronized void put(D newDetail) {
@@ -27,7 +32,8 @@ public class Storage<D extends Detail> {
         }
         itemList.add(newDetail);
         storageFill.incrementAndGet();
-        System.out.println("Put new " + newDetail.getClass().getSimpleName() + ", id: " + newDetail.getID() + " fill:" + storageFill.intValue());
+        Platform.runLater(() -> listener.updateFill(storageFill,getClass().getSimpleName()));
+      //  System.out.println("Put new " + newDetail.getClass().getSimpleName() + ", id: " + newDetail.getID() + " fill:" + storageFill.intValue());
         notify();
     }
 
@@ -41,15 +47,10 @@ public class Storage<D extends Detail> {
         }
         D retItem = itemList.removeFirst();
         storageFill.decrementAndGet();
+        Platform.runLater(() -> listener.updateFill(storageFill,getClass().getSimpleName()));
+
         notifyAll();
         return retItem;
     }
 
-    public AtomicInteger getStorageFill() {
-        return storageFill;
-    }
-
-    public int getStorageCapacity() {
-        return storageCapacity;
-    }
 }

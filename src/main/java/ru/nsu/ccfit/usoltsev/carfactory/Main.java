@@ -1,7 +1,6 @@
 package ru.nsu.ccfit.usoltsev.carfactory;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import ru.nsu.ccfit.usoltsev.carfactory.dealers.Dealer;
@@ -15,33 +14,28 @@ import ru.nsu.ccfit.usoltsev.carfactory.storages.EngineStorage;
 
 import java.io.IOException;
 
-public class Main {
-//    @Override
-//    public void start(Stage stage) throws IOException {
-////        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("hello-view.fxml"));
-////        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-////        stage.setTitle("Hello!");
-////        stage.setScene(scene);
-////        stage.show();
-//    }
-
-    public static void main(String[] args) throws InterruptedException {
-//        launch();
+public class Main extends Application {
+    @Override
+    public void start(Stage stage) throws IOException {
         try {
             FactoryProperties.readInfo();
-            EngineStorage engineStorage = new EngineStorage(FactoryProperties.ENGINE_STORAGE_SIZE);
-            BodyStorage bodyStorage = new BodyStorage(FactoryProperties.BODY_STORAGE_SIZE);
-            AccessoryStorage accessoryStorage = new AccessoryStorage(FactoryProperties.ACCESSORY_STORAGE_SIZE);
+            View view = new View();
 
-            AutoStorage autoStorage = new AutoStorage(FactoryProperties.AUTO_STORAGE_SIZE);
+            EngineStorage engineStorage = new EngineStorage(FactoryProperties.ENGINE_STORAGE_SIZE, view);
+            BodyStorage bodyStorage = new BodyStorage(FactoryProperties.BODY_STORAGE_SIZE, view);
+            AccessoryStorage accessoryStorage = new AccessoryStorage(FactoryProperties.ACCESSORY_STORAGE_SIZE, view);
+
+            AutoStorage autoStorage = new AutoStorage(FactoryProperties.AUTO_STORAGE_SIZE, view);
 
             EngineProducer engineProducer = new EngineProducer(engineStorage);
             BodyProducer bodyProducer = new BodyProducer(bodyStorage);
             AccessoryProducer accessoryProducer = new AccessoryProducer(accessoryStorage);
 
-            Factory factory = new Factory(engineStorage, bodyStorage, accessoryStorage, autoStorage);
+            Factory factory = new Factory(engineStorage, bodyStorage, accessoryStorage, autoStorage, view);
             AutoStorageController autoStorageController = new AutoStorageController(factory, autoStorage);
             Dealer dealer = new Dealer(autoStorage);
+
+            view.drawMenu(engineProducer, bodyProducer, accessoryProducer, dealer);
 
             engineProducer.start();
             bodyProducer.start();
@@ -49,14 +43,26 @@ public class Main {
             autoStorageController.start();
             dealer.start();
 
-            engineProducer.join();
-            bodyProducer.join();
-            accessoryProducer.join();
-            autoStorageController.join();
-            dealer.join();
+            Scene scene = new Scene(view.getRoot());
+            stage.setScene(scene);
+            stage.show();
+
+            stage.setOnHidden(event -> {
+                engineProducer.interrupt();
+                bodyProducer.interrupt();
+                accessoryProducer.interrupt();
+                factory.getWorkers().killThreadPool();
+                autoStorageController.interrupt();
+                dealer.interrupt();
+            });
 
         } catch (RuntimeException e) {
             System.err.println(e.getMessage());
         }
     }
+
+    public static void main(String[] args) {
+        launch();
+    }
+
 }

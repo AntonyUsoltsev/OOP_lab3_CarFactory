@@ -1,2 +1,0 @@
-мая 11, 2023 12:56:54 AM ru.nsu.ccfit.usoltsev.carfactory.dealers.Dealer run
-INFO: Buy new car: Auto: ea87a29e-b7ad-4d49-8e51-164fbfb11d09, Engine 13365fb3-6f44-4685-a003-947b6172f6e4, Body ac07220c-33f2-48f0-b20f-e77553b1f057, Accessories 67bd7a18-5f30-4466-b296-cbcd8e1962f0

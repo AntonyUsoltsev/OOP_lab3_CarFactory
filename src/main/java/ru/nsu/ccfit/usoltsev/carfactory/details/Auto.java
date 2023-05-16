@@ -1,9 +1,8 @@
 package ru.nsu.ccfit.usoltsev.carfactory.details;
 
-import ru.nsu.ccfit.usoltsev.carfactory.details.Detail;
 
 import java.util.*;
-@SuppressWarnings("FieldCanBeLocal")
+@SuppressWarnings({"FieldCanBeLocal", "MismatchedQueryAndUpdateOfCollection"})
 public class Auto extends Detail {
     private final HashMap<String, Detail> details;
     private final String autoInfo;

@@ -6,5 +6,7 @@ module ru.nsu.ccfit.usoltsev.carfactory {
     exports ru.nsu.ccfit.usoltsev.carfactory;
     exports ru.nsu.ccfit.usoltsev.carfactory.details;
     exports ru.nsu.ccfit.usoltsev.carfactory.storages;
+    exports ru.nsu.ccfit.usoltsev.carfactory.producers;
+    exports ru.nsu.ccfit.usoltsev.carfactory.dealers;
     opens ru.nsu.ccfit.usoltsev.carfactory.details to javafx.fxml;
 }

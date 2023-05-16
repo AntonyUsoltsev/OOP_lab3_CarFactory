@@ -1,11 +1,9 @@
 package ru.nsu.ccfit.usoltsev.carfactory;
 
 import ru.nsu.ccfit.usoltsev.carfactory.storages.AutoStorage;
-import ru.nsu.ccfit.usoltsev.carfactory.threadPool.Task;
 
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 public class AutoStorageController extends Thread {
@@ -24,8 +22,6 @@ public class AutoStorageController extends Thread {
                 while (!Thread.currentThread().isInterrupted()) {
                     factory.createAuto();
                     TimeUnit.SECONDS.sleep(1);
-                    //System.out.println("Lдщлщ");
-                    //autoStorage.wait();
                 }
 
             } catch (InterruptedException e) {

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Slider fx:id="EngineSlider" blockIncrement="1.0" layoutX="200.0" layoutY="60.0" majorTickUnit="1.0" max="10.0" min="1.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1.0" />
+      <Slider fx:id="BodySlider" blockIncrement="1.0" layoutX="200.0" layoutY="110.0" majorTickUnit="1.0" max="10.0" min="1.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1.0" />
+      <Slider fx:id="AccessoiresSlider" blockIncrement="1.0" layoutX="200.0" layoutY="160.0" majorTickUnit="1.0" max="10.0" min="1.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1.0" />
+      <Slider fx:id="DealerSlider" blockIncrement="5.0" layoutX="200.0" layoutY="210.0" majorTickUnit="5.0" max="30.0" min="5.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="5.0" />
+      <Text layoutX="50.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Engine Producer Sleep" />
+      <Text layoutX="50.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Body Producer Sleep" />
+      <Text layoutX="38.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Accessoires Producer Sleep" />
+      <Text layoutX="76.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dealer Sleep" />
+      <Text layoutX="182.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INFO" />
+      <Text layoutX="60.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Engine Storage Fill" />
+      <Text layoutX="64.0" layoutY="370.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Body Storage Fill" />
+      <Text layoutX="48.0" layoutY="410.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Accessoires Storage Fill" />
+      <Text layoutX="66.0" layoutY="450.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Auto Storage Fill" />
+      <Text layoutX="81.0" layoutY="490.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cars Made" />
+   </children>
+</AnchorPane>

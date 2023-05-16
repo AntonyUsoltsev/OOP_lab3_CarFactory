@@ -3,11 +3,20 @@ package ru.nsu.ccfit.usoltsev.carfactory.producers;
 import ru.nsu.ccfit.usoltsev.carfactory.details.Detail;
 import ru.nsu.ccfit.usoltsev.carfactory.storages.Storage;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.TimeUnit;
+
 public class Producer<S extends Storage<D>, D extends Detail> extends Thread{
-    private final S storage;
-    private final int sleepTime;
-    public Producer(S storage, int sleepTime){
+    protected final S storage;
+    protected Double sleepTime;
+    protected final Class<D> clazz;
+    public Producer(S storage, double sleepTime, Class<D> clazz){
         this.storage = storage;
+        this.sleepTime = sleepTime;
+        this.clazz = clazz;
+    }
+
+    public void setSleepTime(Double sleepTime) {
         this.sleepTime = sleepTime;
     }
 
@@ -15,11 +24,13 @@ public class Producer<S extends Storage<D>, D extends Detail> extends Thread{
     public void run() {
         try {
             while (!Thread.currentThread().isInterrupted()) {
-                storage.put((D) new Detail());
-                Thread.sleep(sleepTime);
+                storage.put(clazz.getDeclaredConstructor().newInstance());
+                TimeUnit.SECONDS.sleep(sleepTime.intValue());
             }
         } catch (InterruptedException e) {
             System.err.println(e.getMessage());
+        } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
     }
 }
