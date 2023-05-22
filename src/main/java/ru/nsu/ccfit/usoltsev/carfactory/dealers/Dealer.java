@@ -13,9 +13,7 @@ public class Dealer extends Thread {
     private final AutoStorage autoStorage;
     private final Logger LOGGER = Logger.getLogger(Logger.class.getName());
    // private final ThreadPool dealers;
-
-    private  Double sleepTime;
-
+    private Double sleepTime;
 
     public Dealer(AutoStorage autoStorage) {
         this.autoStorage = autoStorage;

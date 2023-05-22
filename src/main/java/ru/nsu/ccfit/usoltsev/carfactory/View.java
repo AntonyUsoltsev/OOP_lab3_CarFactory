@@ -33,7 +33,7 @@ public class View implements FillListener {
 
     }
 
-    public void drawMenu(EngineProducer engineProducer, BodyProducer bodyProducer, AccessoryProducer accessoryProducer, Dealer dealer) {
+    public void drawMenu(EngineProducer engineProducer, BodyProducer bodyProducer, AccessoryProducer accessoryProducer, Dealer dealer,AutoStorageController autoStorageController) {
 
         Slider engineSlider = (Slider) root.lookup("#EngineSlider");
         engineSlider.valueProperty().addListener((changed, oldValue, newValue) -> engineProducer.setSleepTime((Double) newValue));
@@ -43,6 +43,9 @@ public class View implements FillListener {
         accSlider.valueProperty().addListener((changed, oldValue, newValue) -> accessoryProducer.setSleepTime((Double) newValue));
         Slider dealerSlider = (Slider) root.lookup("#DealerSlider");
         dealerSlider.valueProperty().addListener((changed, oldValue, newValue) -> dealer.setSleepTime((Double) newValue));
+        Slider autoCreateSlider = (Slider) root.lookup("#AutoCreateSlider");
+        autoCreateSlider.valueProperty().addListener((changed, oldValue, newValue) -> autoStorageController.setSleepTime((Double) newValue));
+
     }
 
     @Override

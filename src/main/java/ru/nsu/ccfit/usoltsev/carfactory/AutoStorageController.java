@@ -9,10 +9,16 @@ import java.util.concurrent.TimeUnit;
 public class AutoStorageController extends Thread {
     private final Factory factory;
     private final AutoStorage autoStorage;
+    private  Double sleepTime;
 
     public AutoStorageController(Factory factory, AutoStorage autoStorage) {
         this.factory = factory;
         this.autoStorage = autoStorage;
+        sleepTime = 1.0;
+    }
+
+    public void setSleepTime(Double sleepTime) {
+        this.sleepTime = sleepTime;
     }
 
     @Override
@@ -21,9 +27,8 @@ public class AutoStorageController extends Thread {
             try {
                 while (!Thread.currentThread().isInterrupted()) {
                     factory.createAuto();
-                    TimeUnit.SECONDS.sleep(1);
+                    TimeUnit.MILLISECONDS.sleep((long) (sleepTime *1000));
                 }
-
             } catch (InterruptedException e) {
                 System.out.println(Arrays.toString(e.getStackTrace()));
                 Thread.currentThread().interrupt();

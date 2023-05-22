@@ -35,13 +35,14 @@ public class Main extends Application {
             AutoStorageController autoStorageController = new AutoStorageController(factory, autoStorage);
             Dealer dealer = new Dealer(autoStorage);
 
-            view.drawMenu(engineProducer, bodyProducer, accessoryProducer, dealer);
+            view.drawMenu(engineProducer, bodyProducer, accessoryProducer, dealer,autoStorageController);
 
+            dealer.start();
             engineProducer.start();
             bodyProducer.start();
             accessoryProducer.start();
             autoStorageController.start();
-            dealer.start();
+
 
             Scene scene = new Scene(view.getRoot());
             stage.setScene(scene);

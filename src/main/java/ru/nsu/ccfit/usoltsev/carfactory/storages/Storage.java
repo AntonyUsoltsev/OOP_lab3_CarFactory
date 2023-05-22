@@ -32,9 +32,9 @@ public class Storage<D extends Detail> {
         }
         itemList.add(newDetail);
         storageFill.incrementAndGet();
-        Platform.runLater(() -> listener.updateFill(storageFill,getClass().getSimpleName()));
-      //  System.out.println("Put new " + newDetail.getClass().getSimpleName() + ", id: " + newDetail.getID() + " fill:" + storageFill.intValue());
-        notify();
+        Platform.runLater(() -> listener.updateFill(storageFill, this.getClass().getSimpleName()));
+        System.out.println("Put new " + newDetail.getClass().getSimpleName() + ", id: " + newDetail.getID() + " fill:" + storageFill.intValue());
+        notifyAll();
     }
 
     public synchronized D get() {
@@ -47,8 +47,7 @@ public class Storage<D extends Detail> {
         }
         D retItem = itemList.removeFirst();
         storageFill.decrementAndGet();
-        Platform.runLater(() -> listener.updateFill(storageFill,getClass().getSimpleName()));
-
+        Platform.runLater(() -> listener.updateFill(storageFill, this.getClass().getSimpleName()));
         notifyAll();
         return retItem;
     }
